@@ -2,7 +2,6 @@ import React, { useReducer, useState } from "react";
 import { useGetFxPrices } from "../CustomHooks/useGetFxPrices";
 import { fxSpotReducer, BuySell } from "./fxSpotReducer";
 import { createTradeConfirmMessage } from "../modules/createTradeConfirmationMessage";
-import { getCcyKey } from "../modules/getCcyKey";
 import { CurrencyPairSelector } from "./CurrencyPairSelector";
 import { PriceDisplay } from "./PriceDisplay";
 import { FxTradeForm } from "./FxTradeForm";

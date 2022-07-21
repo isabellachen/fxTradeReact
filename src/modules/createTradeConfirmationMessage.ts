@@ -1,6 +1,8 @@
-import { getCcyKey } from "./getCcyKey.js";
+import { FxSpotState } from "../Components/fxSpotReducer";
+import { FxPriceByCcyPair } from "../CustomHooks/useGetFxPrices";
+import { getCcyKey } from "./getCcyKey";
 
-export function createTradeConfirmMessage(state) {
+export function createTradeConfirmMessage(state: FxSpotState) {
   return `${state.buySell === "BUY" ? "Bought" : "Sold"} ${
     state.amount
   } ${state.investmentCcy.toUpperCase()} for ${
@@ -8,18 +10,18 @@ export function createTradeConfirmMessage(state) {
   } ${getCounterCcy(state).toUpperCase()}`;
 }
 
-function getBidAsk(state) {
+function getBidAsk(state: FxSpotState) {
   const ccyKey = getCcyKey(state.ccyPair);
-  return state.prices[ccyKey];
+  return (state.prices as FxPriceByCcyPair)[ccyKey];
 }
 
-function getCounterCcy(state) {
+function getCounterCcy(state: FxSpotState) {
   return state.investmentCcy === state.ccyPair.ccy1
     ? state.ccyPair.ccy2
     : state.ccyPair.ccy1;
 }
 
-function getCounterRate(state) {
+function getCounterRate(state: FxSpotState) {
   if (state.buySell === "BUY") {
     if (state.investmentCcy === state.ccyPair.ccy1) {
       return Number(getBidAsk(state).bid);

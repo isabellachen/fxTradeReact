@@ -1,9 +1,10 @@
-import { getRandomInt } from "./getRandomInt.js";
+import { OnFxRatesReceived } from "../Components/interfaces.js";
+import { getRandomInt } from "./getRandomInt";
 
 // Fake FX SPOT subscription.
 // This would otherwise open a websocket connection
-export function fxRateSubscriber({ onReceive }) {
-  let subscribed;
+export function fxRateSubscriber({ onReceive }: OnFxRatesReceived) {
+  let subscribed: NodeJS.Timer;
 
   const subscribe = () => {
     if (subscribed) {
@@ -46,14 +47,14 @@ export function fxRateSubscriber({ onReceive }) {
   };
 }
 
-function withFakePips(price) {
+function withFakePips(price: number) {
   // add 3 digits of pips
   const pips =
     getRandomInt(1, 10) * 100 + getRandomInt(1, 10) * 10 + getRandomInt(1, 10);
   return `${price}${pips}`;
 }
 
-function fakeBidAsk(originalPrice, spread) {
+function fakeBidAsk(originalPrice: string, spread: number) {
   const price = Number(withFakePips(Number(originalPrice)));
   return {
     ask: ((price * 100000 + Math.ceil((spread * 100000) / 2)) / 100000).toFixed(

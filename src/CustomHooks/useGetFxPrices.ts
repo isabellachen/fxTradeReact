@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { FxSpotActions } from "../Components/fxSpotReducer";
 import { fxRateSubscriber } from "../modules/fxRateSubscriber";
 
 export interface FxPriceInfo {
@@ -12,16 +13,18 @@ export interface FxPriceInfo {
 
 export type FxPriceByCcyPair = Record<string, FxPriceInfo>;
 
-export function useGetFxPrices(): { prices: FxPriceByCcyPair | undefined } {
-  const [prices, setPrices] = useState<FxPriceByCcyPair | undefined>();
-
+export function useGetFxPrices(
+  fxDispatch: React.Dispatch<FxSpotActions>
+): null {
   useEffect(() => {
     const { subscribe, unsubscribe } = fxRateSubscriber({
-      onReceive: (price: any) => setPrices(price),
+      onReceive: (prices: FxPriceByCcyPair) => {
+        fxDispatch({ type: "GET_PRICES_SUCCESS", payload: prices });
+      },
     });
     subscribe();
     return () => unsubscribe();
   }, []);
 
-  return { prices };
+  return null;
 }

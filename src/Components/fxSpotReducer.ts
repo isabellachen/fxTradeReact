@@ -5,12 +5,17 @@ export enum BuySell {
   Sell = "SELL",
 }
 
+export interface CcyPair {
+  ccy1: string;
+  ccy2: string;
+}
+
 export interface FxSpotState {
   buySell: BuySell;
   investmentCcy: string;
   amount: string;
   prices: FxPriceByCcyPair | undefined;
-  ccyPair: string;
+  ccyPair: CcyPair;
 }
 
 export type FxSpotActions =
@@ -32,7 +37,7 @@ export type FxSpotActions =
     }
   | {
       type: "SET_CCY_PAIR";
-      payload: string;
+      payload: CcyPair;
     };
 
 export function fxSpotReducer(state: FxSpotState, action: FxSpotActions) {
@@ -46,17 +51,17 @@ export function fxSpotReducer(state: FxSpotState, action: FxSpotActions) {
     case "SET_AMOUNT":
       return { ...state, amount: action.payload };
     case "SET_CCY_PAIR":
-      const ccyLabel = Object.values(
-        (state.prices as FxPriceByCcyPair)[action.payload].ccyPair
+      const pairValues = Object.values(action.payload);
+      const isSelectedInvestmentCcyInNewPair = pairValues.includes(
+        state.investmentCcy
       );
-      const prefillSelectedCcy = ccyLabel.includes(state.investmentCcy)
+      const defaultInvestmentCcy = isSelectedInvestmentCcyInNewPair
         ? state.investmentCcy
-        : ccyLabel[0];
-      console.log(ccyLabel);
+        : pairValues[0];
       return {
         ...state,
         ccyPair: action.payload,
-        investmentCcy: prefillSelectedCcy,
+        investmentCcy: defaultInvestmentCcy,
       };
     default:
       return state;

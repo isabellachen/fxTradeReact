@@ -10,7 +10,7 @@ export function createTradeConfirmMessage(state) {
 
 function getBidAsk(state) {
   const ccyKey = getCcyKey(state.ccyPair);
-  return state.price[ccyKey];
+  return state.prices[ccyKey];
 }
 
 function getCounterCcy(state) {

@@ -1,6 +1,6 @@
 import React from "react";
 import { getCcyKey } from "../modules/getCcyKey";
-import { FxSpotState } from "./fxSpotReducer";
+import { FxSpotState } from "./interfaces";
 
 export function PriceDisplay({ fxState }: { fxState: FxSpotState }) {
   return (

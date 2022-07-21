@@ -1,10 +1,12 @@
 import React, { useReducer, useState } from "react";
 import { useGetFxPrices } from "../CustomHooks/useGetFxPrices";
-import { fxSpotReducer, BuySell } from "./fxSpotReducer";
+import { fxSpotReducer } from "./fxSpotReducer";
 import { createTradeConfirmMessage } from "../modules/createTradeConfirmationMessage";
 import { CurrencyPairSelector } from "./CurrencyPairSelector";
 import { PriceDisplay } from "./PriceDisplay";
 import { FxTradeForm } from "./FxTradeForm";
+import { BuySell } from "./interfaces";
+
 const initialFxState = {
   buySell: BuySell.Buy,
   investmentCcy: "EUR",
@@ -31,8 +33,8 @@ export function FxSpot(): JSX.Element {
           <PriceDisplay fxState={fxState} />
           <FxTradeForm fxState={fxState} fxDispatch={fxDispatch} />
           <button
+            type="submit"
             onClick={() => {
-              console.log(fxState);
               const tradeConfirmationMessage =
                 createTradeConfirmMessage(fxState);
               setTradeConfirmationMessage(tradeConfirmationMessage);

@@ -1,4 +1,4 @@
-import { FxSpotState } from "../Components/fxSpotReducer";
+import { FxSpotState } from "../Components/interfaces";
 import { FxPriceByCcyPair } from "../CustomHooks/useGetFxPrices";
 import { getCcyKey } from "./getCcyKey";
 

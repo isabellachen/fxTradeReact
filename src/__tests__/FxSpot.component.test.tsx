@@ -2,6 +2,7 @@ import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { FxSpot } from "../Components/FxSpot.component";
 import { FxPriceByCcyPair } from "../CustomHooks/useGetFxPrices";
+import userEvent from "@testing-library/user-event";
 
 jest.mock("../modules/fxRateSubscriber", () => {
   return {
@@ -74,5 +75,35 @@ describe("FxSpot Component", () => {
     const askDisplay = await screen.findByTitle(/ask/i);
     expect(bidDisplay).toHaveTextContent("0.93271");
     expect(askDisplay).toHaveTextContent("0.93281");
+  });
+
+  it("should not be able to trade if no amount was entered", async () => {
+    render(<FxSpot />);
+    const tradeButton = await screen.findByRole("button", { name: /trade/i });
+    expect(tradeButton).toBeDisabled();
+  });
+
+  it("should be able to buy and show success message", async () => {
+    render(<FxSpot />);
+    const amountInput = await screen.findByRole("textbox", { name: /amount/i });
+    const tradeButton = await screen.findByRole("button", { name: /trade/i });
+    await userEvent.type(amountInput, "1000");
+    await userEvent.click(tradeButton);
+    const successMessage = await screen.findByText(/bought/i);
+    expect(successMessage).toHaveTextContent("Bought 1000 EUR for 1165.73 USD");
+  });
+
+  it("should be able to sell and show success message", async () => {
+    render(<FxSpot />);
+    const amountInput = await screen.findByRole("textbox", { name: /amount/i });
+    const tradeButton = await screen.findByRole("button", { name: /trade/i });
+    const sellRadio = await screen.findByRole("radio", { name: /sell/i });
+    await userEvent.type(amountInput, "1000");
+    await userEvent.click(sellRadio);
+    await userEvent.click(tradeButton);
+    const successMessage = await screen.findByText(/sold/i);
+    expect(successMessage).toHaveTextContent(
+      "Sold 1000 EUR for 1165.8500000000001 USD"
+    );
   });
 });

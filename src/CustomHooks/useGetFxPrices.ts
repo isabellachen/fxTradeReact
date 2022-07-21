@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { FxSpotActions } from "../Components/fxSpotReducer";
+import { useEffect } from "react";
+import { FxSpotActions } from "../Components/interfaces";
 import { fxRateSubscriber } from "../modules/fxRateSubscriber";
 
 export interface FxPriceInfo {
@@ -24,7 +24,7 @@ export function useGetFxPrices(
     });
     subscribe();
     return () => unsubscribe();
-  }, []);
+  }, [fxDispatch]);
 
   return null;
 }

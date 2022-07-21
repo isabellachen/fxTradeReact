@@ -1,44 +1,4 @@
-import { FxPriceByCcyPair } from "../CustomHooks/useGetFxPrices";
-
-export enum BuySell {
-  Buy = "BUY",
-  Sell = "SELL",
-}
-
-export interface CcyPair {
-  ccy1: string;
-  ccy2: string;
-}
-
-export interface FxSpotState {
-  buySell: BuySell;
-  investmentCcy: string;
-  amount: string;
-  prices: FxPriceByCcyPair | undefined;
-  ccyPair: CcyPair;
-}
-
-export type FxSpotActions =
-  | {
-      type: "GET_PRICES_SUCCESS";
-      payload: FxPriceByCcyPair;
-    }
-  | {
-      type: "SET_BUY_OR_SELL";
-      payload: BuySell;
-    }
-  | {
-      type: "SET_INVESTMENT_CCY";
-      payload: string;
-    }
-  | {
-      type: "SET_AMOUNT";
-      payload: string;
-    }
-  | {
-      type: "SET_CCY_PAIR";
-      payload: CcyPair;
-    };
+import { FxSpotActions, FxSpotState } from "./interfaces";
 
 export function fxSpotReducer(state: FxSpotState, action: FxSpotActions) {
   switch (action.type) {

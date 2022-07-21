@@ -1,8 +1,7 @@
 import React from "react";
 import { FxPriceByCcyPair } from "../CustomHooks/useGetFxPrices";
 import { getCcyKey } from "../modules/getCcyKey";
-import { BuySell } from "./fxSpotReducer";
-import { FxComponentProps } from "./interfaces";
+import { BuySell, FxComponentProps } from "./interfaces";
 
 export function FxTradeForm({ fxState, fxDispatch }: FxComponentProps) {
   return (
@@ -61,8 +60,9 @@ export function FxTradeForm({ fxState, fxDispatch }: FxComponentProps) {
         })}
       </div>
 
-      <label>Amount:</label>
+      <label htmlFor="amount">Amount:</label>
       <input
+        id="amount"
         type="text"
         name="amount"
         onChange={(event) => {

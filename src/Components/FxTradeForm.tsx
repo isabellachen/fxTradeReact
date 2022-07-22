@@ -3,7 +3,7 @@ import { FxPriceByCcyPair } from "../CustomHooks/useGetFxPrices";
 import { getCcyKey } from "../modules/getCcyKey";
 import { BuySell, FxComponentProps } from "./interfaces";
 
-export function FxTradeForm({ fxState, fxDispatch }: FxComponentProps) {
+export function FxTradeForm({ fxState, onGetPrices }: FxComponentProps) {
   return (
     <form>
       <div>
@@ -14,7 +14,7 @@ export function FxTradeForm({ fxState, fxDispatch }: FxComponentProps) {
           value={BuySell.Buy}
           checked={fxState.buySell === BuySell.Buy}
           onChange={(event) => {
-            fxDispatch({ type: "SET_BUY_OR_SELL", payload: BuySell.Buy });
+            onGetPrices({ type: "SET_BUY_OR_SELL", payload: BuySell.Buy });
           }}
         />
         <label htmlFor="buy-radio">Buy</label>
@@ -25,7 +25,7 @@ export function FxTradeForm({ fxState, fxDispatch }: FxComponentProps) {
           value={BuySell.Sell}
           checked={fxState.buySell === BuySell.Sell}
           onChange={(event) => {
-            fxDispatch({
+            onGetPrices({
               type: "SET_BUY_OR_SELL",
               payload: BuySell.Sell,
             });
@@ -48,7 +48,7 @@ export function FxTradeForm({ fxState, fxDispatch }: FxComponentProps) {
                 value={ccy}
                 checked={fxState.investmentCcy === ccy}
                 onChange={(event) => {
-                  fxDispatch({
+                  onGetPrices({
                     type: "SET_INVESTMENT_CCY",
                     payload: ccy,
                   });
@@ -66,7 +66,7 @@ export function FxTradeForm({ fxState, fxDispatch }: FxComponentProps) {
         type="text"
         name="amount"
         onChange={(event) => {
-          fxDispatch({
+          onGetPrices({
             type: "SET_AMOUNT",
             payload: event.target.value,
           });

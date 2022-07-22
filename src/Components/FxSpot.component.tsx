@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { useCallback, useEffect, useReducer, useState } from "react";
 import { useGetFxPrices } from "../CustomHooks/useGetFxPrices";
 import { fxSpotReducer } from "./fxSpotReducer";
 import { createTradeConfirmMessage } from "../modules/createTradeConfirmationMessage";
@@ -6,6 +6,7 @@ import { CurrencyPairSelector } from "./CurrencyPairSelector";
 import { PriceDisplay } from "./PriceDisplay";
 import { FxTradeForm } from "./FxTradeForm";
 import { BuySell } from "./interfaces";
+import { FxSpotActions } from "./interfaces";
 
 const initialFxState = {
   buySell: BuySell.Buy,
@@ -21,17 +22,23 @@ export function FxSpot(): JSX.Element {
     string | undefined
   >();
 
-  useGetFxPrices(fxDispatch);
+  const onGetPrices = useCallback(
+    (action: FxSpotActions) => {
+      fxDispatch(action);
+    },
+    [fxDispatch]
+  );
 
+  useGetFxPrices(onGetPrices);
   return (
     <div>
       {fxState.prices === undefined ? (
         <div>loading...</div>
       ) : (
         <div>
-          <CurrencyPairSelector fxState={fxState} fxDispatch={fxDispatch} />
+          <CurrencyPairSelector fxState={fxState} onGetPrices={onGetPrices} />
           <PriceDisplay fxState={fxState} />
-          <FxTradeForm fxState={fxState} fxDispatch={fxDispatch} />
+          <FxTradeForm fxState={fxState} onGetPrices={onGetPrices} />
           <button
             type="submit"
             onClick={() => {

@@ -33,7 +33,7 @@ export interface OnFxRatesReceived {
 }
 export interface FxComponentProps {
   fxState: FxSpotState;
-  fxDispatch: React.Dispatch<FxSpotActions>;
+  onGetPrices: (action: FxSpotActions) => void;
 }
 export enum BuySell {
   Buy = "BUY",

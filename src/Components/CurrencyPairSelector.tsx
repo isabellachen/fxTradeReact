@@ -5,7 +5,7 @@ import { FxComponentProps } from "./interfaces";
 
 export function CurrencyPairSelector({
   fxState,
-  fxDispatch,
+  onGetPrices,
 }: FxComponentProps) {
   return (
     <div className="mt1" style={{ display: "flex" }}>
@@ -17,7 +17,7 @@ export function CurrencyPairSelector({
           const pairString = event.target.value;
           const ccyPair = (fxState.prices as FxPriceByCcyPair)[pairString]
             .ccyPair;
-          fxDispatch({ type: "SET_CCY_PAIR", payload: ccyPair });
+          onGetPrices({ type: "SET_CCY_PAIR", payload: ccyPair });
         }}
       >
         {fxState.prices &&

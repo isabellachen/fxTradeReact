@@ -14,17 +14,17 @@ export interface FxPriceInfo {
 export type FxPriceByCcyPair = Record<string, FxPriceInfo>;
 
 export function useGetFxPrices(
-  fxDispatch: React.Dispatch<FxSpotActions>
+  onGetPrices: React.Dispatch<FxSpotActions>
 ): null {
   useEffect(() => {
     const { subscribe, unsubscribe } = fxRateSubscriber({
       onReceive: (prices: FxPriceByCcyPair) => {
-        fxDispatch({ type: "GET_PRICES_SUCCESS", payload: prices });
+        onGetPrices({ type: "GET_PRICES_SUCCESS", payload: prices });
       },
     });
     subscribe();
     return () => unsubscribe();
-  }, [fxDispatch]);
+  }, [onGetPrices]);
 
   return null;
 }

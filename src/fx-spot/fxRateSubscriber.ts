@@ -1,5 +1,9 @@
-import { OnFxRatesReceived } from "../Components/interfaces.js";
 import { getRandomInt } from "./getRandomInt";
+import { FxPriceByCcyPair } from "./useGetFxPrices";
+
+export interface OnFxRatesReceived {
+  onReceive: (prices: FxPriceByCcyPair) => void;
+}
 
 // Fake FX SPOT subscription.
 // This would otherwise open a websocket connection

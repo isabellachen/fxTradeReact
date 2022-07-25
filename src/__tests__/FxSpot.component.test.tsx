@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { FxSpot } from "../Components/FxSpot.component";
-import { FxPriceByCcyPair } from "../CustomHooks/useGetFxPrices";
+import { FxSpot } from "../fx-spot/FxSpot";
+import { FxPriceByCcyPair } from "../fx-spot/useGetFxPrices";
 import userEvent from "@testing-library/user-event";
 
 jest.mock("../modules/fxRateSubscriber", () => {

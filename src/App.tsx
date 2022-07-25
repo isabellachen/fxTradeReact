@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { FxSpot } from "./Components/FxSpot.component";
+import { FxSpot } from "./fx-spot/FxSpot";
 
 function App() {
   return (
